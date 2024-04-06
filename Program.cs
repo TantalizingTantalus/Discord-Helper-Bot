@@ -16,122 +16,68 @@ using System.Net.NetworkInformation;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Xml.Linq;
 using System.Diagnostics;
+using System.Net;
+using OpenAi_Assistant;
+using OpenAI;
+using OpenAI.Assistants;
+using OpenAI.Threads;
+using OpenAI.Chat;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Web;
+
+
 
 namespace SmellyFeetRevived
 {
+    
 
 
-    /******************************************************************** BEGIN LOGGING CLASS DEFINITIONS **************************************************************************/
-
-    public static class Logger
-    {
-        private static ILogger Log;
-        static Logger()
-        {
-            using ILoggerFactory Factory = LoggerFactory.Create(builder => builder.AddConsole());
-
-            Log = Factory.CreateLogger<Program>();
-        }
-
-        public static void LogInformation(string Message)
-        {
-            Log.LogInformation(Message);
-            return;
-        }
-
-        public static void LogInformation(string Message, object Param1, object Param2 = null, object Param3 = null, object Param4 = null, object Param5 = null)
-        {
-            Message = ProcessMessage(Message, Param1, Param2, Param3, Param4, Param5);
-            Log.LogInformation(Message);
-            return;
-        }
-
-        public static void LogError(string Message)
-        {
-            Log.LogError(Message);
-            return;
-        }
-
-        public static void LogError(string Message, object Param1, object Param2 = null, object Param3 = null, object Param4 = null, object Param5 = null)
-        {
-            Message = ProcessMessage(Message, Param1, Param2, Param3, Param4, Param5);
-            Log.LogError(Message);
-            return;
-        }
-
-        public static string ProcessMessage(string Message, object Param1, object Param2 = null, object Param3 = null, object Param4 = null, object Param5 = null)
-        {
-
-            List<string> Parameters = new List<string>();
-
-            if (Param1 != null)
-            {
-                Parameters.Add((string)Param1);
-            }
-
-            if (Param2 != null)
-            {
-                Parameters.Add((string)Param2);
-            }
-
-            if (Param3 != null)
-            {
-                Parameters.Add((string)Param3);
-            }
-
-            if (Param4 != null)
-            {
-                Parameters.Add((string)Param4);
-            }
-
-            if (Param5 != null)
-            {
-                Parameters.Add((string)Param5);
-            }
-
-            string ConcPattern = @"(\{([^}]+)\})";
-            Match ConcMatch = Regex.Match(Message, ConcPattern);
-
-            while (ConcMatch.Success)
-            {
-                for (int i = 0; i < Parameters.Count; i++)
-                {
-                    Message = Message.Replace(ConcMatch.Groups[0].Value, Parameters[i]);
-                    ConcMatch = Regex.Match(Message, ConcPattern);
-                }
-            }
-
-            return Message;
-        }
-    }
-
-    /******************************************************************** END LOGGING CLASS DEFINITIONS **************************************************************************/
-
-    /******************************************************************** BEGIN DISCORD CLASS DEFINITIONS **************************************************************************/
-
-    public static class DiscordInformation
+    public class OpenAIClassForNow
     {
 
-        // Dictionary of ulong channel id's to send messages to
-        public static Dictionary<string, ulong> ChannelLookup = new Dictionary<string, ulong>
-        {
-            { "YourChannelName", yourulongchannelIDhere }
-        };
 
-        public static Dictionary<string, ulong> UserLookup = new Dictionary<string, ulong>
-        {
-            {"YourUsername", yourusernameIDhere },
-            {"None", 0 }
-        };
 
-        // Need unique bot token for server, get this on app dashboard
-        public static string BOT_TOKEN = "YourBotTokenHere";
+
     }
-
-    /******************************************************************** END DISCORD CLASS DEFINITIONS **************************************************************************/
 
     /******************************************************************** BEGIN JSON BLOBS DEFINITIONS **************************************************************************/
 
+    public class InsultMeBlob
+    {
+        public string insult { get; set; }
+    }
+
+    public class WeatherBlob
+    {
+
+    }
+
+    public class BBC
+    {
+        public string title { get; set; }
+        public string news_description { get; set; }
+        public string news_link { get; set; }
+    }
+
+    public class NewsArticles
+    {
+        public List<BBC> latest { get; set; }
+    }
+
+    public class Slip
+    {
+
+        public int id { get; set; }
+        public string advice { get; set; }
+    }
+
+    public class SlipObject
+    {
+        public Slip slip { get; set; }
+    }
+
+    
     public class WordOfTheDayBlob
     {
         public List<string> SearchKey { get; set; }
@@ -163,12 +109,12 @@ namespace SmellyFeetRevived
         [STAThread]
         static void Main()
         {
+            
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             new Program().MainAsync().GetAwaiter().GetResult();
             Application.Run(new Form1());
-            
         }
 
 
@@ -177,6 +123,9 @@ namespace SmellyFeetRevived
         {
             try
             {
+                
+
+
                 Client = new DiscordSocketClient(new DiscordSocketConfig
                 {
                     LogLevel = LogSeverity.Info,
@@ -190,7 +139,7 @@ namespace SmellyFeetRevived
                 Client.MessageReceived += HandleCommand;
 
                 // Cache bot token for multiple uses later
-                string CurrentBot = DiscordInformation.BOT_TOKEN;
+                string CurrentBot = Discord.BOT_TOKEN;
 
                 // Begin login
                 Logger.LogInformation("Attempting to login with bot token {0}", CurrentBot);
@@ -218,10 +167,15 @@ namespace SmellyFeetRevived
 
         private async Task HandleCommand(SocketMessage arg)
         {
+
+            const string GPT_TOKEN = "My OpenAI API Token";
+            const string WEATHER_TOKEN = "My Weather Token";
+
             try
             {
 
                 SocketUserMessage message = arg as SocketUserMessage;
+
 
                 if (message == null || message.Author.IsBot)
                 {
@@ -238,11 +192,248 @@ namespace SmellyFeetRevived
                     const string WOTDCommandPattern = @"\/(wotd)";
                     const string RandomCommandPattern = @"/(?i)random";
                     const string PoopPattern = @"poop";
+                    const string GPTPattern = @"\/(?i)gpt(.*)";
+                    const string AdvicePattern = @"/(?i)advice";
+                    const string BBCPattern = @"/(?i)bbc";
+                    const string InsultMePattern = @"/(?i)insultme";
+                    const string WeatherUpdatePattern = @"/(?i)weather";
+                    const string ListCommandPattern = @"/(?i)commands";
                     RegexOptions options = RegexOptions.IgnoreCase;
                     Match PoopMatch = Regex.Match(CachedMsg, PoopPattern, options);
                     Match SearchMatch = Regex.Match(CachedMsg, SearchCommandPattern, options);
                     Match WordMatch = Regex.Match(CachedMsg, WOTDCommandPattern, options);
                     Match RandomMatch = Regex.Match(CachedMsg, RandomCommandPattern, options);
+                    Match GPTMatch = Regex.Match(CachedMsg, GPTPattern, options);
+                    Match AdviceMatch = Regex.Match(CachedMsg, AdvicePattern, options);
+                    Match BBCMatch = Regex.Match(CachedMsg, BBCPattern, options);
+                    Match InsultMeMatch = Regex.Match(CachedMsg, InsultMePattern, options);
+                    Match WeatherMatch = Regex.Match(CachedMsg, WeatherUpdatePattern, options);
+                    Match ListCommandMatch = Regex.Match(CachedMsg, ListCommandPattern, options);
+
+                    if(GPTMatch.Success)
+                    {
+
+                        string UNDER_CONSTRUCTION = @"
+                                             ____ ___           .___             _________                         __                        __  .__       
+                                            |    |   \____    __| _/___________  \_   ___ \  ____   ____   _______/  |________ __ __   _____/  |_|__| ____   ____  
+                                            |    |   /    \  / __ |/ __ \_  __ \ /    \  \/ /  _ \ /    \ /  ___/\   __\_  __ \  |  \_/ ___\   __\  |/  _ \ /    \ 
+                                            |    |  /   |  \/ /_/ \  ___/|  | \/ \     \___(  <_> )   |  \\___ \  |  |  |  | \/  |  /\  \___|  | |  (  <_> )   |  \
+                                            |______/|___|  /\____ |\___  >__|     \______  /\____/|___|  /____  > |__|  |__|  |____/  \___  >__| |__|\____/|___|  /
+                                                         \/      \/    \/                \/            \/     \/                          \/                    \/ ";
+
+
+                        UNDER_CONSTRUCTION = UNDER_CONSTRUCTION.Trim();
+                        Logger.LogInformation("Initializing OpenAI API");
+                        
+
+                        try
+                        {
+                            //const string asName = "SomeAssistant";
+                            
+                            //using var api = new OpenAIClient(GPT_TOKEN);
+                            //var AssistantRequest = new CreateAssistantRequest("gpt-3.5-turbo-1106", "SmellyFeet", "The goal is to help with chat conversations", "answer every inquiry as though you were a sassy Gandalf");
+                            //var Assistant = await api.AssistantsEndpoint.CreateAssistantAsync(AssistantRequest);
+                            //var models = api.ModelsEndpoint.GetModelsAsync();
+                            //var thread = await api.ThreadsEndpoint.CreateThreadAsync();
+                            //var MessageRequest = new CreateMessageRequest(GPTMatch.Groups[1].Value);
+                            //var gptMessage = await api.ThreadsEndpoint.CreateMessageAsync(thread.Id, MessageRequest);
+                            //var run = await thread.CreateRunAsync(Assistant);
+
+                            //var messageList = await api.ThreadsEndpoint.ListMessagesAsync(thread.Id);
+
+                            //while(run.Status != RunStatus.Completed)
+                            //{
+                            //    run = await api.ThreadsEndpoint.RetrieveRunAsync(thread.Id, run.Id);
+                            //}
+
+                            //messageList = await api.ThreadsEndpoint.ListMessagesAsync(thread.Id);
+
+                            //var t = 5;
+
+                            if (!(await SendDiscordMessage($"This is what GPT has to say about it:\n \n" + $"GPT bot feature is currently under construction...\n" , message.Channel, true, null, false)))
+                            {
+                                Console.WriteLine($"Failed to post message...");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //const string completionsEndpoint = "https://api.openai.com/v1/chat/completions";
+                            //bool checkCompletionsOnFailure = true;
+                            //string tempContainer = null;
+                            //if (checkCompletionsOnFailure)
+                            //{
+
+                            //    using (HttpClient httpClient = new HttpClient())
+                            //    {
+                            //        HttpResponseMessage Response = await httpClient.GetAsync(completionsEndpoint);
+                            //        string result = await Response.Content.ReadAsStringAsync();
+
+                            //        dynamic jsonObject = JsonConvert.DeserializeObject(result);
+                            //        tempContainer = jsonObject.error.message;
+
+                            //    }
+                            //}
+                            //if (!(await SendDiscordMessage($"Failed to resolve GPT request:\n \n{ex.Message} \n" +
+                            //    "\nCaptured Prompt: **" +
+                            //    GPTMatch.Groups[1].Value.Trim() + "**" +
+                            //    "\nFull Entered Prompt: **" + GPTMatch.Value.Trim() + "**" +
+                            //    "\nModel: **" + chat.Model + "**" +
+                            //    "\nAPI Response: **" + (chat.MostRecentApiResult == null ? "null" : chat.MostRecentApiResult) + "**" +
+                            //    $"\n\nResponse from Completions({completionsEndpoint}):\n **" + (checkCompletionsOnFailure ? tempContainer : "Completion viewing disabled...") + "**" +
+                            //    "\n\n**Request Parameters**" +
+                            //    "\nUser: **" + (chat.RequestParameters.user == null ? "null" : chat.RequestParameters.user) + "**" +
+                            //    "\nTemperature: **" + chat.RequestParameters.Temperature + "**"
+                            //    , message.Channel)))
+                            //{
+                            //    Console.WriteLine($"Failed to post message...");
+                            //}
+                        }
+                    }
+
+                    if(ListCommandMatch.Success)
+                    {
+                        try
+                        {
+                            if (!await SendDiscordMessage($"Here is a list of all the available commands: \n\n" +
+                                $"**/search 'term'** - gives a relavant wiki article on the term\n" +
+                                $"**/wotd** - gives Merriam Webster's Word of the Day\n" +
+                                $"**/random** - returns a random GIF from GIPHY\n" +
+                                $"**/gpt 'question'** - returns a gpt enabled response to the question\n" +
+                                $"**/advice** - returns some advice\n" +
+                                $"**/bbc** - returns recent BBC news articles\n" +
+                                $"**/insultme** - attacks you with profanity\n" +
+                                $"**/weather** - displays local weather\n" +
+                                $"**/commands** - lists all the available commands\n", message.Channel))
+                            {
+                                Logger.LogInformation("Failed to send failure message...");
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            if (!await SendDiscordMessage($"Ran into issues listing the commands:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            {
+                                Logger.LogInformation("Failed to send failure message...");
+                            }
+                        }
+                    }
+
+                    if(AdviceMatch.Success)
+                    {
+                        try
+                        {
+                            using (HttpClient httpClient = new HttpClient())
+                            {
+                                string endPoint = $"https://api.adviceslip.com/advice";
+                                HttpResponseMessage result = await httpClient.GetAsync(endPoint);
+                                string finResult = await result.Content.ReadAsStringAsync();
+                                SlipObject AdviceObject = JsonConvert.DeserializeObject<SlipObject>(finResult);
+
+
+                                if (!await SendDiscordMessage($"Here's that advice you ordered, cooked fresh: \n\n{AdviceObject.slip.advice}", message.Channel))
+                                {
+                                    Logger.LogInformation("Failed to send failure message...");
+                                }
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            if(!await SendDiscordMessage($"Ran into issues giving you advice:\n**Error:** \n\n{ex.Message}" , message.Channel))
+                            {
+                                Logger.LogInformation("Failed to send failure message...");
+                            }
+                        }
+                    }
+
+                    if (WeatherMatch.Success)
+                    {
+                        try
+                        {
+                            using (HttpClient httpClient = new HttpClient())
+                            {
+                                string endPoint = $"https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={WEATHER_TOKEN}";
+                                HttpResponseMessage result = await httpClient.GetAsync(endPoint);
+                                string finResult = await result.Content.ReadAsStringAsync();
+                                WeatherBlob WeatherObject = JsonConvert.DeserializeObject<WeatherBlob>(finResult);
+
+
+                                if (!await SendDiscordMessage($"Here's that weather you wanted: \n\n{finResult}", message.Channel))
+                                {
+                                    Logger.LogInformation("Failed to send failure message...");
+                                }
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            if (!await SendDiscordMessage($"Ran into issues giving you the weather:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            {
+                                Logger.LogInformation("Failed to send failure message...");
+                            }
+                        }
+                    }
+
+                    if (InsultMeMatch.Success)
+                    {
+                        try
+                        {
+                            using (HttpClient httpClient = new HttpClient())
+                            {
+                                string endPoint = $"https://evilinsult.com/generate_insult.php?lang=en&type=json";
+                                HttpResponseMessage result = await httpClient.GetAsync(endPoint);
+                                string finResult = await result.Content.ReadAsStringAsync();
+                                InsultMeBlob InsultMeObject = JsonConvert.DeserializeObject<InsultMeBlob>(finResult);
+
+                                string decodedInsult = HttpUtility.HtmlDecode(InsultMeObject.insult);
+                                if (!await SendDiscordMessage(decodedInsult, message.Channel))
+                                {
+                                    Logger.LogInformation("Failed to send failure message...");
+                                }
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            if (!await SendDiscordMessage($"Ran into issues insulting you :(\n**Error:** \n\n{ex.Message}", message.Channel))
+                            {
+                                Logger.LogInformation("Failed to send failure message...");
+                            }
+                        }
+                    }
+
+                    if (BBCMatch.Success)
+                    {
+                        try
+                        {
+                            using (HttpClient httpClient = new HttpClient())
+                            {
+                                string endPoint = $"https://bbc-api.vercel.app/latest?lang=english";
+                                HttpResponseMessage result = await httpClient.GetAsync(endPoint);
+                                string finResult = await result.Content.ReadAsStringAsync();
+                                NewsArticles ArticleObject = JsonConvert.DeserializeObject<NewsArticles>(finResult);
+                                string final = string.Empty;
+
+                                foreach(BBC Article in ArticleObject.latest)
+                                {
+                                    if(!final.Contains(Article.news_link))
+                                    {
+                                        final += $"**Title**: \n{Article.title}\n**Link:**\n{Article.news_link}\n\n\n";
+                                    }
+                                    
+                                }
+
+
+                                if (!await SendDiscordMessage($"Here's some articles from BBC: \n\n{final}", message.Channel, true, null, false))
+                                {
+                                    Logger.LogError("Failed to send failure message...");
+                                }
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            if (!await SendDiscordMessage($"Ran into issues grabbing the articles:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            {
+                                Logger.LogError("Failed to send failure message...");
+                            }
+                        }
+                    }
 
                     if (RandomMatch.Success)
                     {
@@ -361,7 +552,7 @@ namespace SmellyFeetRevived
                             string ScraperURL = "https://www.merriam-webster.com/word-of-the-day";
 
 
-                            SocketChannel som = Client.GetChannel(DiscordInformation.ChannelLookup["ChannelName"]);
+                            SocketChannel som = Client.GetChannel(Discord.ChannelLookup["GulagServer"]);
 
                             // Get the channel using the ID
                             SocketTextChannel channel = (SocketTextChannel)som;
@@ -415,13 +606,6 @@ namespace SmellyFeetRevived
                         }
                     }
                 }
-                else
-                {
-                    if (!(await SendDiscordMessage("No message contents found :(.....", message.Channel)))
-                    {
-                        Console.WriteLine("Failed to send message...");
-                    }
-                }
             }
             catch (Exception Ex)
             {
@@ -438,7 +622,7 @@ namespace SmellyFeetRevived
 
         static async Task<string> GetRandomGifUrl(string Keyword = null)
         {
-            const string apiKey = "yourgiphyapikey";
+            const string apiKey = "My GIPHY API Token";
             using (HttpClient httpClient = new HttpClient())
             {
                 string giphyApiUrl = $"https://api.giphy.com/v1/gifs/random?api_key={apiKey}";
@@ -476,7 +660,7 @@ namespace SmellyFeetRevived
             }
         }
 
-        static async Task<bool> SendDiscordMessage(string Message, ISocketMessageChannel targetChannel, bool CleanHtml = true, string RandomGIFInfluence = null)
+        static async Task<bool> SendDiscordMessage(string Message, ISocketMessageChannel targetChannel, bool CleanHtml = true, string RandomGIFInfluence = null, bool sendGIF = true)
         {
             try
             {
@@ -497,7 +681,11 @@ namespace SmellyFeetRevived
 
                 // Send Message to channel
                 await TargetChannel.SendMessageAsync($"**Smelly Feet here with a PSA!**\n\n{Message}\n\nThanks for following (**{TargetChannel.Name}**) updates!");
-                await TargetChannel.SendMessageAsync(BufferGIF);
+                if(sendGIF)
+                {
+                    await TargetChannel.SendMessageAsync(BufferGIF);
+                }
+                
 
                 // Return success
                 return true;

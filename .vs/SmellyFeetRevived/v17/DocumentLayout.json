@@ -1,0 +1,102 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|c:\\users\\gaevi\\onedrive\\documents\\codepractice\\smellyfeetrevived\\smellyfeetrevived\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\discord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|solutionrelative:discord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|c:\\users\\gaevi\\onedrive\\documents\\codepractice\\smellyfeetrevived\\smellyfeetrevived\\smellyfeetrevived.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|solutionrelative:smellyfeetrevived.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|solutionrelative:logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|SmellyFeetRevived.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 163,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SmellyFeetRevived",
+              "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\SmellyFeetRevived.csproj",
+              "RelativeDocumentMoniker": "SmellyFeetRevived.csproj",
+              "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\SmellyFeetRevived.csproj",
+              "RelativeToolTip": "SmellyFeetRevived.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-04-06T18:21:24.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Form1.cs [Design]",
+              "RelativeToolTip": "Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-30T02:17:58.996Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Discord.cs",
+              "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Discord.cs",
+              "RelativeDocumentMoniker": "Discord.cs",
+              "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Discord.cs",
+              "RelativeToolTip": "Discord.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-30T00:35:46.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAEcCAAAAAAAAAAAIwHACAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-19T17:35:43.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Logger.cs",
+              "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Logger.cs",
+              "RelativeDocumentMoniker": "Logger.cs",
+              "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\SmellyFeetRevived\\Logger.cs",
+              "RelativeToolTip": "Logger.cs",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAmwF4AAACzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-30T00:34:35.942Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

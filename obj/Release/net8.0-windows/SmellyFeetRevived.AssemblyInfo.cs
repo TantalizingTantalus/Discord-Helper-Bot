@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmellyFeetRevived")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9658a84234607101ef0c24b0489c14a3dac42d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmellyFeetRevived")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmellyFeetRevived")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
