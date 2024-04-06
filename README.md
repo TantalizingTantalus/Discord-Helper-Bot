@@ -25,7 +25,7 @@ Discord helper bot is written in C# .NET 8.0 Framework and uses a variety of API
  - Create a shortcut to the SmellyFeetRevived.exe in the release folder
  - Add the newly create shortcut to your startup folder
 
-To disable the bot from running, simply search task manager for the name of the bot "SmellyFeetRevived" and end the task. 
+To disable the bot from running, simply search task manager for the name of the bot "DiscordHelperBot" and end the task. 
 
 # Issues
 - GPT tooling is still under development due to GPT rate limitations, may get mixed results.

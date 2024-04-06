@@ -1,4 +1,4 @@
-﻿namespace SmellyFeetRevived
+﻿namespace DiscordHelperBot
 {
     partial class Form1
     {

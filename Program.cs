@@ -25,21 +25,12 @@ using OpenAI.Chat;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
+using DiscordHelperBot;
 
 
 
-namespace SmellyFeetRevived
+namespace DiscordHelperBot
 {
-    
-
-
-    public class OpenAIClassForNow
-    {
-
-
-
-
-    }
 
     /******************************************************************** BEGIN JSON BLOBS DEFINITIONS **************************************************************************/
 
@@ -77,7 +68,7 @@ namespace SmellyFeetRevived
         public Slip slip { get; set; }
     }
 
-    
+
     public class WordOfTheDayBlob
     {
         public List<string> SearchKey { get; set; }
@@ -109,7 +100,7 @@ namespace SmellyFeetRevived
         [STAThread]
         static void Main()
         {
-            
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
@@ -117,15 +108,10 @@ namespace SmellyFeetRevived
             Application.Run(new Form1());
         }
 
-
-
         public async Task MainAsync()
         {
             try
             {
-                
-
-
                 Client = new DiscordSocketClient(new DiscordSocketConfig
                 {
                     LogLevel = LogSeverity.Info,
@@ -145,7 +131,6 @@ namespace SmellyFeetRevived
                 Logger.LogInformation("Attempting to login with bot token {0}", CurrentBot);
                 await Client.LoginAsync(TokenType.Bot, CurrentBot);
                 await Client.StartAsync();
-
 
                 await Task.Delay(-1);
             }
@@ -173,9 +158,7 @@ namespace SmellyFeetRevived
 
             try
             {
-
                 SocketUserMessage message = arg as SocketUserMessage;
-
 
                 if (message == null || message.Author.IsBot)
                 {
@@ -210,7 +193,7 @@ namespace SmellyFeetRevived
                     Match WeatherMatch = Regex.Match(CachedMsg, WeatherUpdatePattern, options);
                     Match ListCommandMatch = Regex.Match(CachedMsg, ListCommandPattern, options);
 
-                    if(GPTMatch.Success)
+                    if (GPTMatch.Success)
                     {
 
                         string UNDER_CONSTRUCTION = @"
@@ -222,16 +205,13 @@ namespace SmellyFeetRevived
                                                          \/      \/    \/                \/            \/     \/                          \/                    \/ ";
 
 
-                        UNDER_CONSTRUCTION = UNDER_CONSTRUCTION.Trim();
                         Logger.LogInformation("Initializing OpenAI API");
-                        
 
                         try
                         {
-                            //const string asName = "SomeAssistant";
-                            
+
                             //using var api = new OpenAIClient(GPT_TOKEN);
-                            //var AssistantRequest = new CreateAssistantRequest("gpt-3.5-turbo-1106", "SmellyFeet", "The goal is to help with chat conversations", "answer every inquiry as though you were a sassy Gandalf");
+                            //var AssistantRequest = new CreateAssistantRequest("gpt-3.5-turbo-1106", "GPTDiscordBot", "The goal is to help with chat conversations", "answer every inquiry as though you were a sassy Gandalf");
                             //var Assistant = await api.AssistantsEndpoint.CreateAssistantAsync(AssistantRequest);
                             //var models = api.ModelsEndpoint.GetModelsAsync();
                             //var thread = await api.ThreadsEndpoint.CreateThreadAsync();
@@ -241,7 +221,7 @@ namespace SmellyFeetRevived
 
                             //var messageList = await api.ThreadsEndpoint.ListMessagesAsync(thread.Id);
 
-                            //while(run.Status != RunStatus.Completed)
+                            //while (run.Status != RunStatus.Completed)
                             //{
                             //    run = await api.ThreadsEndpoint.RetrieveRunAsync(thread.Id, run.Id);
                             //}
@@ -250,7 +230,7 @@ namespace SmellyFeetRevived
 
                             //var t = 5;
 
-                            if (!(await SendDiscordMessage($"This is what GPT has to say about it:\n \n" + $"GPT bot feature is currently under construction...\n" , message.Channel, true, null, false)))
+                            if (!(await SendDiscordMessage($"This is what GPT has to say about it:\n \n" + $"GPT bot feature is currently under construction...\n", message.Channel, true, null, false)))
                             {
                                 Console.WriteLine($"Failed to post message...");
                             }
@@ -290,7 +270,7 @@ namespace SmellyFeetRevived
                         }
                     }
 
-                    if(ListCommandMatch.Success)
+                    if (ListCommandMatch.Success)
                     {
                         try
                         {
@@ -308,7 +288,7 @@ namespace SmellyFeetRevived
                                 Logger.LogInformation("Failed to send failure message...");
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             if (!await SendDiscordMessage($"Ran into issues listing the commands:\n**Error:** \n\n{ex.Message}", message.Channel))
                             {
@@ -317,7 +297,7 @@ namespace SmellyFeetRevived
                         }
                     }
 
-                    if(AdviceMatch.Success)
+                    if (AdviceMatch.Success)
                     {
                         try
                         {
@@ -337,7 +317,7 @@ namespace SmellyFeetRevived
                         }
                         catch (Exception ex)
                         {
-                            if(!await SendDiscordMessage($"Ran into issues giving you advice:\n**Error:** \n\n{ex.Message}" , message.Channel))
+                            if (!await SendDiscordMessage($"Ran into issues giving you advice:\n**Error:** \n\n{ex.Message}", message.Channel))
                             {
                                 Logger.LogInformation("Failed to send failure message...");
                             }
@@ -410,13 +390,13 @@ namespace SmellyFeetRevived
                                 NewsArticles ArticleObject = JsonConvert.DeserializeObject<NewsArticles>(finResult);
                                 string final = string.Empty;
 
-                                foreach(BBC Article in ArticleObject.latest)
+                                foreach (BBC Article in ArticleObject.latest)
                                 {
-                                    if(!final.Contains(Article.news_link))
+                                    if (!final.Contains(Article.news_link))
                                     {
-                                        final += $"**Title**: \n{Article.title}\n**Link:**\n{Article.news_link}\n\n\n";
+                                        final += $"**Title**: {Article.title}\n**Link:** {Article.news_link}\n\n\n";
                                     }
-                                    
+
                                 }
 
 
@@ -681,11 +661,11 @@ namespace SmellyFeetRevived
 
                 // Send Message to channel
                 await TargetChannel.SendMessageAsync($"**Smelly Feet here with a PSA!**\n\n{Message}\n\nThanks for following (**{TargetChannel.Name}**) updates!");
-                if(sendGIF)
+                if (sendGIF)
                 {
                     await TargetChannel.SendMessageAsync(BufferGIF);
                 }
-                
+
 
                 // Return success
                 return true;
@@ -752,4 +732,3 @@ namespace SmellyFeetRevived
     }
 
 }
-
