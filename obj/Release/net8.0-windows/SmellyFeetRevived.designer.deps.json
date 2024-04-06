@@ -6,19 +6,6 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "SmellyFeetRevived/1.0.0": {
-        "dependencies": {
-          "Discord.Net": "3.13.0",
-          "Discord.Net.Core": "3.13.0",
-          "Microsoft.Extensions.Logging": "8.0.0",
-          "Microsoft.Extensions.Logging.Console": "8.0.0",
-          "OpenAI-DotNet": "7.7.6",
-          "OpenAi_Assistant": "1.0.4"
-        },
-        "runtime": {
-          "SmellyFeetRevived.dll": {}
-        }
-      },
       "Discord.Net/3.13.0": {
         "dependencies": {
           "Discord.Net.Commands": "3.13.0",
@@ -278,7 +265,14 @@
           }
         }
       },
-      "System.Collections.Immutable/5.0.0": {},
+      "System.Collections.Immutable/5.0.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.Collections.Immutable.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.20.51904"
+          }
+        }
+      },
       "System.Interactive.Async/5.0.0": {
         "dependencies": {
           "System.Linq.Async": "5.0.0"
@@ -306,21 +300,37 @@
           }
         }
       },
-      "System.Text.Encodings.Web/8.0.0": {},
+      "System.Text.Encodings.Web/8.0.0": {
+        "runtime": {
+          "lib/net8.0/System.Text.Encodings.Web.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll": {
+            "rid": "browser",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
       "System.Text.Json/8.0.0": {
         "dependencies": {
           "System.Text.Encodings.Web": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/System.Text.Json.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
         }
       },
       "System.ValueTuple/4.5.0": {}
     }
   },
   "libraries": {
-    "SmellyFeetRevived/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Discord.Net/3.13.0": {
       "type": "package",
       "serviceable": true,
