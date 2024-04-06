@@ -32,7 +32,18 @@ using DiscordHelperBot;
 namespace DiscordHelperBot
 {
 
-    /******************************************************************** BEGIN JSON BLOBS DEFINITIONS **************************************************************************/
+    /*
+     
+
+                                                                     ____. _________________    _______   
+                                                                    |    |/   _____/\_____  \   \      \  
+                                                                    |    |\_____  \  /   |   \  /   |   \ 
+                                                                /\__|    |/        \/    |    \/    |    \
+                                                                \________/_______  /\_______  /\____|__  /
+                                                                                 \/         \/         \/ 
+
+
+     */
 
     public class InsultMeBlob
     {
@@ -87,7 +98,18 @@ namespace DiscordHelperBot
 
     /******************************************************************** END JSON BLOBS DEFINITIONS **************************************************************************/
 
-    /********************************************************************** BEGIN MAIN PROGRAM LOOP ****************************************************************************/
+    /*
+     
+
+                                                                           _____         .__        
+                                                                          /     \ _____  |__| ____  
+                                                                         /  \ /  \\__  \ |  |/    \ 
+                                                                        /    Y    \/ __ \|  |   |  \
+                                                                        \____|__  (____  /__|___|  /
+                                                                                \/     \/        \/ 
+
+
+     */
 
     internal class Program
     {
@@ -148,7 +170,18 @@ namespace DiscordHelperBot
 
         /********************************************************************** END MAIN PROGRAM LOOP ****************************************************************************/
 
-        /********************************************************************** BEGIN UTILITY FUNCTIONS ****************************************************************************/
+        /*
+         
+
+                                                                         ____ ___   __  .__.__  .__  __          
+                                                                        |    |   \_/  |_|__|  | |__|/  |_ ___.__.
+                                                                        |    |   /\   __\  |  | |  \   __<   |  |
+                                                                        |    |  /  |  | |  |  |_|  ||  |  \___  |
+                                                                        |______/   |__| |__|____/__||__|  / ____|
+                                                                                                          \/     
+
+
+         */
 
         private async Task HandleCommand(SocketMessage arg)
         {
@@ -171,18 +204,19 @@ namespace DiscordHelperBot
                     string CachedMsg = message.Content;
                     const string CommandName = @"/search";
 
+                    // Define regex capture patterns
                     const string SearchCommandPattern = $"^({CommandName})(.*)$";
                     const string WOTDCommandPattern = @"\/(wotd)";
                     const string RandomCommandPattern = @"/(?i)random";
-                    const string PoopPattern = @"poop";
                     const string GPTPattern = @"\/(?i)gpt(.*)";
                     const string AdvicePattern = @"/(?i)advice";
                     const string BBCPattern = @"/(?i)bbc";
                     const string InsultMePattern = @"/(?i)insultme";
                     const string WeatherUpdatePattern = @"/(?i)weather";
                     const string ListCommandPattern = @"/(?i)commands";
+
+                    // Match the cachedMsg to the regex patterns
                     RegexOptions options = RegexOptions.IgnoreCase;
-                    Match PoopMatch = Regex.Match(CachedMsg, PoopPattern, options);
                     Match SearchMatch = Regex.Match(CachedMsg, SearchCommandPattern, options);
                     Match WordMatch = Regex.Match(CachedMsg, WOTDCommandPattern, options);
                     Match RandomMatch = Regex.Match(CachedMsg, RandomCommandPattern, options);
@@ -193,6 +227,7 @@ namespace DiscordHelperBot
                     Match WeatherMatch = Regex.Match(CachedMsg, WeatherUpdatePattern, options);
                     Match ListCommandMatch = Regex.Match(CachedMsg, ListCommandPattern, options);
 
+                    // Begin matches
                     if (GPTMatch.Success)
                     {
 
@@ -500,7 +535,7 @@ namespace DiscordHelperBot
                                 }
                                 else
                                 {
-                                    // Take first 1800 characters from string to be safe
+                                    // Take first 1700 characters from string to be safe
                                     string ModifiedMessage = new string(Message.Take(1700).ToArray());
                                     Console.WriteLine(ModifiedMessage.Length);
                                     if (!await SendDiscordMessage($"There seems to be quite a bit on **{SearchKey}**, this is all I could pull: \n\n{ModifiedMessage}", message.Channel, false))
@@ -523,7 +558,6 @@ namespace DiscordHelperBot
                             }
                         }
                     }
-
 
                     if (WordMatch.Success)
                     {
