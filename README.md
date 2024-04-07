@@ -43,4 +43,4 @@ To disable the bot from running, simply search task manager for the name of the 
 - [Word of the Day](https://www.merriam-webster.com)
 - [Discord API](https://docs.discordnet.dev/guides/introduction/intro.html)
 - [OpenAI API](https://github.com/RageAgainstThePixel/OpenAI-DotNet)
-
+- [ICanHazDadJoke](https://icanhazdadjoke.com/api)
