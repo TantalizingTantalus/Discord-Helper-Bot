@@ -10,15 +10,15 @@ Discord helper bot is written in C# .NET 8.0 Framework and uses a variety of API
 - Once the bot is invited to the channel all thats left is build for release and run the .exe
 
 # Commands
-- **/search 'term'** - returns a relavant wiki article snippet on the term, character limit for article is at 1700.\
-- **/wotd** - returns Merriam Webster's Word of the Day by scraping the website and searching for keywords, may fail if MW changes site formatting/layout.\
-- **/random** - returns a random GIF url from GIPHY.\
-- **/gpt 'question'** - Ask GPT a question! example: "/gpt how far is the moon from earth?"\
-- **/advice** - returns some advice.\
-- **/bbc** - returns recent BBC news articles.\
-- **/insultme** - hurls an insult your way!\
-- **/weather 'city,state'** - displays the weather for the selected city, optional input state.\
-- **/taj** - Tells a Joke! Helper bots can be funny too!\
+- **/search 'term'** - returns a relavant wiki article snippet on the term, character limit for article is at 1700.
+- **/wotd** - returns Merriam Webster's Word of the Day by scraping the website and searching for keywords, may fail if MW changes site formatting/layout.
+- **/random** - returns a random GIF url from GIPHY.
+- **/gpt 'question'** - Ask GPT a question! example: "/gpt how far is the moon from earth?"
+- **/advice** - returns some advice.
+- **/bbc** - returns recent BBC news articles.
+- **/insultme** - hurls an insult your way!
+- **/weather 'city,state'** - displays the weather for the selected city, optional input state.
+- **/taj** - Tells a Joke! Helper bots can be funny too!
 - **/commands** - lists all the available commands.
 
 # Automatically have the bot run on startup on your pc
