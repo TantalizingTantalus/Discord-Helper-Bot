@@ -26,6 +26,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
 using DiscordHelperBot;
+using System.Windows.Forms;
 
 
 
@@ -35,78 +36,13 @@ namespace DiscordHelperBot
     /*
      
 
-                                                                     ____. _________________    _______   
-                                                                    |    |/   _____/\_____  \   \      \  
-                                                                    |    |\_____  \  /   |   \  /   |   \ 
-                                                                /\__|    |/        \/    |    \/    |    \
-                                                                \________/_______  /\_______  /\____|__  /
-                                                                                 \/         \/         \/ 
+                                                                          ____ ___   __  .__.__  .__  __          
+                                                                        |    |   \_/  |_|__|  | |__|/  |_ ___.__.
+                                                                        |    |   /\   __\  |  | |  \   __<   |  |
+                                                                        |    |  /  |  | |  |  |_|  ||  |  \___  |
+                                                                        |______/   |__| |__|____/__||__|  / ____|
+                                                                                                          \/     
 
-
-     */
-
-    public class InsultMeBlob
-    {
-        public string insult { get; set; }
-    }
-
-    public class WeatherBlob
-    {
-
-    }
-
-    public class BBC
-    {
-        public string title { get; set; }
-        public string news_description { get; set; }
-        public string news_link { get; set; }
-    }
-
-    public class NewsArticles
-    {
-        public List<BBC> latest { get; set; }
-    }
-
-    public class Slip
-    {
-
-        public int id { get; set; }
-        public string advice { get; set; }
-    }
-
-    public class SlipObject
-    {
-        public Slip slip { get; set; }
-    }
-
-
-    public class WordOfTheDayBlob
-    {
-        public List<string> SearchKey { get; set; }
-    }
-
-    public class GiphyResponse
-    {
-        public GiphyData Data { get; set; }
-    }
-
-    public class GiphyData
-    {
-        [JsonProperty("url")]
-        public string Image_Url { get; set; }
-    }
-
-    /******************************************************************** END JSON BLOBS DEFINITIONS **************************************************************************/
-
-    /*
-     
-
-                                                                           _____         .__        
-                                                                          /     \ _____  |__| ____  
-                                                                         /  \ /  \\__  \ |  |/    \ 
-                                                                        /    Y    \/ __ \|  |   |  \
-                                                                        \____|__  (____  /__|___|  /
-                                                                                \/     \/        \/ 
 
 
      */
@@ -168,17 +104,18 @@ namespace DiscordHelperBot
             }
         }
 
-        /********************************************************************** END MAIN PROGRAM LOOP ****************************************************************************/
+        /******************************************************************** END UTILITY FUNCTIONS **************************************************************************/
 
         /*
          
 
-                                                                         ____ ___   __  .__.__  .__  __          
-                                                                        |    |   \_/  |_|__|  | |__|/  |_ ___.__.
-                                                                        |    |   /\   __\  |  | |  \   __<   |  |
-                                                                        |    |  /  |  | |  |  |_|  ||  |  \___  |
-                                                                        |______/   |__| |__|____/__||__|  / ____|
-                                                                                                          \/     
+                                                                   
+                                                                           _____         .__        
+                                                                          /     \ _____  |__| ____  
+                                                                         /  \ /  \\__  \ |  |/    \ 
+                                                                        /    Y    \/ __ \|  |   |  \
+                                                                        \____|__  (____  /__|___|  /
+                                                                                \/     \/        \/ 
 
 
          */
@@ -187,7 +124,8 @@ namespace DiscordHelperBot
         {
 
             const string GPT_TOKEN = "My OpenAI API Token";
-            const string WEATHER_TOKEN = "My Weather Token";
+            const string WEATHER_TOKEN = "My Weather API Token";
+            
 
             try
             {
@@ -212,8 +150,9 @@ namespace DiscordHelperBot
                     const string AdvicePattern = @"/(?i)advice";
                     const string BBCPattern = @"/(?i)bbc";
                     const string InsultMePattern = @"/(?i)insultme";
-                    const string WeatherUpdatePattern = @"/(?i)weather";
+                    const string WeatherUpdatePattern = @"/(?i)weather.(.*)";
                     const string ListCommandPattern = @"/(?i)commands";
+                    const string JokePattern = @"/(?i)taj";
 
                     // Match the cachedMsg to the regex patterns
                     RegexOptions options = RegexOptions.IgnoreCase;
@@ -226,24 +165,32 @@ namespace DiscordHelperBot
                     Match InsultMeMatch = Regex.Match(CachedMsg, InsultMePattern, options);
                     Match WeatherMatch = Regex.Match(CachedMsg, WeatherUpdatePattern, options);
                     Match ListCommandMatch = Regex.Match(CachedMsg, ListCommandPattern, options);
+                    Match JokeMatch = Regex.Match(CachedMsg, JokePattern, options);
 
                     // Begin matches
                     if (GPTMatch.Success)
                     {
-
-                        string UNDER_CONSTRUCTION = @"
-                                             ____ ___           .___             _________                         __                        __  .__       
-                                            |    |   \____    __| _/___________  \_   ___ \  ____   ____   _______/  |________ __ __   _____/  |_|__| ____   ____  
-                                            |    |   /    \  / __ |/ __ \_  __ \ /    \  \/ /  _ \ /    \ /  ___/\   __\_  __ \  |  \_/ ___\   __\  |/  _ \ /    \ 
-                                            |    |  /   |  \/ /_/ \  ___/|  | \/ \     \___(  <_> )   |  \\___ \  |  |  |  | \/  |  /\  \___|  | |  (  <_> )   |  \
-                                            |______/|___|  /\____ |\___  >__|     \______  /\____/|___|  /____  > |__|  |__|  |____/  \___  >__| |__|\____/|___|  /
-                                                         \/      \/    \/                \/            \/     \/                          \/                    \/ ";
+                        
 
 
                         Logger.LogInformation("Initializing OpenAI API");
 
                         try
                         {
+
+                            string UNDER_CONSTRUCTION = @"
+                                                         ____ ___           .___             _________                         __                        __  .__       
+                                                        |    |   \____    __| _/___________  \_   ___ \  ____   ____   _______/  |________ __ __   _____/  |_|__| ____   ____  
+                                                        |    |   /    \  / __ |/ __ \_  __ \ /    \  \/ /  _ \ /    \ /  ___/\   __\_  __ \  |  \_/ ___\   __\  |/  _ \ /    \ 
+                                                        |    |  /   |  \/ /_/ \  ___/|  | \/ \     \___(  <_> )   |  \\___ \  |  |  |  | \/  |  /\  \___|  | |  (  <_> )   |  \
+                                                        |______/|___|  /\____ |\___  >__|     \______  /\____/|___|  /____  > |__|  |__|  |____/  \___  >__| |__|\____/|___|  /
+                                                                     \/      \/    \/                \/            \/     \/                          \/                    \/ ";
+
+
+                            if (!(await Discord.SendDiscordMessage($"This is what GPT has to say about it:\n \n" + $"GPT bot feature is currently under construction...\n", message.Channel, true, null, false)))
+                            {
+                                Console.WriteLine($"Failed to post message...");
+                            }
 
                             //using var api = new OpenAIClient(GPT_TOKEN);
                             //var AssistantRequest = new CreateAssistantRequest("gpt-3.5-turbo-1106", "GPTDiscordBot", "The goal is to help with chat conversations", "answer every inquiry as though you were a sassy Gandalf");
@@ -263,12 +210,6 @@ namespace DiscordHelperBot
 
                             //messageList = await api.ThreadsEndpoint.ListMessagesAsync(thread.Id);
 
-                            //var t = 5;
-
-                            if (!(await SendDiscordMessage($"This is what GPT has to say about it:\n \n" + $"GPT bot feature is currently under construction...\n", message.Channel, true, null, false)))
-                            {
-                                Console.WriteLine($"Failed to post message...");
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -309,7 +250,7 @@ namespace DiscordHelperBot
                     {
                         try
                         {
-                            if (!await SendDiscordMessage($"Here is a list of all the available commands: \n\n" +
+                            if (!await Discord.SendDiscordMessage($"Here is a list of all the available commands: \n\n" +
                                 $"**/search 'term'** - gives a relavant wiki article on the term\n" +
                                 $"**/wotd** - gives Merriam Webster's Word of the Day\n" +
                                 $"**/random** - returns a random GIF from GIPHY\n" +
@@ -317,7 +258,8 @@ namespace DiscordHelperBot
                                 $"**/advice** - returns some advice\n" +
                                 $"**/bbc** - returns recent BBC news articles\n" +
                                 $"**/insultme** - attacks you with profanity\n" +
-                                $"**/weather** - displays local weather\n" +
+                                $"**/weather 'city,state'** - displays local weather for the input city in input state.\n" +
+                                $"**/taj** - Tells a joke! Helper bots can be funny too!\n" +
                                 $"**/commands** - lists all the available commands\n", message.Channel))
                             {
                                 Logger.LogInformation("Failed to send failure message...");
@@ -325,7 +267,7 @@ namespace DiscordHelperBot
                         }
                         catch (Exception ex)
                         {
-                            if (!await SendDiscordMessage($"Ran into issues listing the commands:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            if (!await Discord.SendDiscordMessage($"Ran into issues listing the commands:\n**Error:** \n\n{ex.Message}", message.Channel))
                             {
                                 Logger.LogInformation("Failed to send failure message...");
                             }
@@ -344,7 +286,7 @@ namespace DiscordHelperBot
                                 SlipObject AdviceObject = JsonConvert.DeserializeObject<SlipObject>(finResult);
 
 
-                                if (!await SendDiscordMessage($"Here's that advice you ordered, cooked fresh: \n\n{AdviceObject.slip.advice}", message.Channel))
+                                if (!await Discord.SendDiscordMessage($"Here's that advice you ordered, cooked fresh: \n\n{AdviceObject.slip.advice}", message.Channel))
                                 {
                                     Logger.LogInformation("Failed to send failure message...");
                                 }
@@ -352,7 +294,38 @@ namespace DiscordHelperBot
                         }
                         catch (Exception ex)
                         {
-                            if (!await SendDiscordMessage($"Ran into issues giving you advice:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            if (!await Discord.SendDiscordMessage($"Ran into issues giving you advice:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            {
+                                Logger.LogInformation("Failed to send failure message...");
+                            }
+                        }
+                    }
+
+                    if(JokeMatch.Success)
+                    {
+                        try
+                        {
+                            using (HttpClient httpClient = new HttpClient())
+                            {
+                                string endPoint = $"https://icanhazdadjoke.com/";
+
+                                httpClient.DefaultRequestHeaders.Accept.Clear();
+                                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                                HttpResponseMessage result = await httpClient.GetAsync(endPoint);
+                                string finResult = await result.Content.ReadAsStringAsync();
+                                JokeObject JokeObject = JsonConvert.DeserializeObject<JokeObject>(finResult);
+
+
+                                if (!await Discord.SendDiscordMessage($"Here's that joke you ordered, cooked to order: \n\n{JokeObject.joke}", message.Channel))
+                                {
+                                    Logger.LogInformation("Failed to send failure message...");
+                                }
+                            };
+                        }
+                        catch(Exception Ex)
+                        {
+                            if (!await Discord.SendDiscordMessage($"Ran into issues telling a joke:\n**Error:** \n\n{Ex.Message}", message.Channel))
                             {
                                 Logger.LogInformation("Failed to send failure message...");
                             }
@@ -365,13 +338,13 @@ namespace DiscordHelperBot
                         {
                             using (HttpClient httpClient = new HttpClient())
                             {
-                                string endPoint = $"https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={WEATHER_TOKEN}";
+                                string endPoint = $"http://api.weatherapi.com/v1/current.json?key={WEATHER_TOKEN}&q={WeatherMatch.Groups[1].Value.Replace(" ", "")}";
                                 HttpResponseMessage result = await httpClient.GetAsync(endPoint);
                                 string finResult = await result.Content.ReadAsStringAsync();
                                 WeatherBlob WeatherObject = JsonConvert.DeserializeObject<WeatherBlob>(finResult);
 
 
-                                if (!await SendDiscordMessage($"Here's that weather you wanted: \n\n{finResult}", message.Channel))
+                                if (!await Discord.SendDiscordMessage($"Here's that weather you wanted for **{WeatherObject.location.name}**, **{WeatherObject.location.region}**: \n\nTemperature: {WeatherObject.current.temp_f}\u00B0F\nFeels like: {WeatherObject.current.feelslike_f}\u00B0F\nCondition: {WeatherObject.current.condition.text}", message.Channel))
                                 {
                                     Logger.LogInformation("Failed to send failure message...");
                                 }
@@ -379,7 +352,7 @@ namespace DiscordHelperBot
                         }
                         catch (Exception ex)
                         {
-                            if (!await SendDiscordMessage($"Ran into issues giving you the weather:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            if (!await Discord.SendDiscordMessage($"Ran into issues giving you the weather:\n**Error:** \n\n{ex.Message}", message.Channel))
                             {
                                 Logger.LogInformation("Failed to send failure message...");
                             }
@@ -398,7 +371,7 @@ namespace DiscordHelperBot
                                 InsultMeBlob InsultMeObject = JsonConvert.DeserializeObject<InsultMeBlob>(finResult);
 
                                 string decodedInsult = HttpUtility.HtmlDecode(InsultMeObject.insult);
-                                if (!await SendDiscordMessage(decodedInsult, message.Channel))
+                                if (!await Discord.SendDiscordMessage(decodedInsult, message.Channel))
                                 {
                                     Logger.LogInformation("Failed to send failure message...");
                                 }
@@ -406,7 +379,7 @@ namespace DiscordHelperBot
                         }
                         catch (Exception ex)
                         {
-                            if (!await SendDiscordMessage($"Ran into issues insulting you :(\n**Error:** \n\n{ex.Message}", message.Channel))
+                            if (!await Discord.SendDiscordMessage($"Ran into issues insulting you :(\n**Error:** \n\n{ex.Message}", message.Channel))
                             {
                                 Logger.LogInformation("Failed to send failure message...");
                             }
@@ -435,7 +408,7 @@ namespace DiscordHelperBot
                                 }
 
 
-                                if (!await SendDiscordMessage($"Here's some articles from BBC: \n\n{final}", message.Channel, true, null, false))
+                                if (!await Discord.SendDiscordMessage($"Here's some articles from BBC: \n\n{final}", message.Channel, true, null, false))
                                 {
                                     Logger.LogError("Failed to send failure message...");
                                 }
@@ -443,7 +416,7 @@ namespace DiscordHelperBot
                         }
                         catch (Exception ex)
                         {
-                            if (!await SendDiscordMessage($"Ran into issues grabbing the articles:\n**Error:** \n\n{ex.Message}", message.Channel))
+                            if (!await Discord.SendDiscordMessage($"Ran into issues grabbing the articles:\n**Error:** \n\n{ex.Message}", message.Channel))
                             {
                                 Logger.LogError("Failed to send failure message...");
                             }
@@ -454,15 +427,17 @@ namespace DiscordHelperBot
                     {
                         try
                         {
-                            string RandomGIF = await GetRandomGifUrl();
-                            if (!(await SendDiscordMessage($"Here's a random GIF:\n\n", message.Channel)))
+                            if (!(await Discord.SendDiscordMessage($"Here's a random GIF:\n\n", message.Channel)))
                             {
                                 Console.WriteLine("Failed to send message...");
                             }
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("Caught exception attempting to send random GIF, error message: " + ex.ToString());
+                            if (!(await Discord.SendDiscordMessage($"Failed to send the GIF:\n\n{ex.Message}", message.Channel)))
+                            {
+                                Console.WriteLine("Failed to send failure message...");
+                            }
                         }
                     }
 
@@ -521,12 +496,12 @@ namespace DiscordHelperBot
                                 Message = ParsedResult["query"]["pages"].First.First["extract"].ToString();
                                 Message = $"**{SearchKey}**:\n" + Message;
 
-                                Message = CleanHTML(Message);
+                                Message = Discord.CleanHTML(Message);
 
                                 // Check if message is less than 1800 characters (Discord's limit is 2000)
                                 if (Message.Length < 1700)
                                 {
-                                    if (!(await SendDiscordMessage($"Here is your search on **{SearchKey}**:\n\n" + Message, message.Channel)))
+                                    if (!(await Discord.SendDiscordMessage($"Here is your search on **{SearchKey}**:\n\n" + Message, message.Channel)))
                                     {
                                         Console.WriteLine($"Failed to post message...");
                                     }
@@ -538,7 +513,7 @@ namespace DiscordHelperBot
                                     // Take first 1700 characters from string to be safe
                                     string ModifiedMessage = new string(Message.Take(1700).ToArray());
                                     Console.WriteLine(ModifiedMessage.Length);
-                                    if (!await SendDiscordMessage($"There seems to be quite a bit on **{SearchKey}**, this is all I could pull: \n\n{ModifiedMessage}", message.Channel, false))
+                                    if (!await Discord.SendDiscordMessage($"There seems to be quite a bit on **{SearchKey}**, this is all I could pull: \n\n{ModifiedMessage}", message.Channel, false))
                                     {
                                         Console.WriteLine("Failed to send message...");
                                         throw new Exception("Failed to post.");
@@ -551,7 +526,7 @@ namespace DiscordHelperBot
                         }
                         catch (Exception ex)
                         {
-                            if (!await SendDiscordMessage($"Failed to parse your search ({SearchKey}), try again!\n\n**Error Message**: \n{ex.Message}", message.Channel))
+                            if (!await Discord.SendDiscordMessage($"Failed to parse your search ({SearchKey}), try again!\n\n**Error Message**: \n{ex.Message}", message.Channel))
                             {
                                 Console.WriteLine("Failed to send message...");
                                 throw new Exception("Failed to post.");
@@ -564,12 +539,6 @@ namespace DiscordHelperBot
                         using (HttpClient client = new HttpClient())
                         {
                             string ScraperURL = "https://www.merriam-webster.com/word-of-the-day";
-
-
-                            SocketChannel som = Client.GetChannel(Discord.ChannelLookup["GulagServer"]);
-
-                            // Get the channel using the ID
-                            SocketTextChannel channel = (SocketTextChannel)som;
 
                             // Prepare search pattern with scraped result
                             string WordOfTheDayPattern = @"<title>(Word of the Day):\s(\w+)";
@@ -607,7 +576,7 @@ namespace DiscordHelperBot
 
 
                                     // Send word of the day message
-                                    if (!await SendDiscordMessage(Message, message.Channel))
+                                    if (!await Discord.SendDiscordMessage(Message, message.Channel))
                                     {
                                         Console.WriteLine("Failed to post the word of the day...");
                                         throw new Exception("Failed to post.");
@@ -623,7 +592,8 @@ namespace DiscordHelperBot
             }
             catch (Exception Ex)
             {
-                Logger.LogError("Ran into error, here is the message:\n{ErrorMessage}", Ex.Message);
+                Console.WriteLine($"Program failed catastrophically...\n{Ex.Message}");
+                throw new Exception("Failed to post.");
             }
             return;
         }
@@ -633,136 +603,8 @@ namespace DiscordHelperBot
             Logger.LogInformation(msg.ToString());
             return Task.CompletedTask;
         }
-
-        static async Task<string> GetRandomGifUrl(string Keyword = null)
-        {
-            const string apiKey = "My GIPHY API Token";
-            using (HttpClient httpClient = new HttpClient())
-            {
-                string giphyApiUrl = $"https://api.giphy.com/v1/gifs/random?api_key={apiKey}";
-                if (Keyword != null)
-                {
-                    giphyApiUrl = $"https://api.giphy.com/v1/gifs/search?api_key={apiKey}&q={Keyword}&limit=50";
-                }
-
-
-                HttpResponseMessage response = await httpClient.GetAsync(giphyApiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string jsonResponse = await response.Content.ReadAsStringAsync();
-
-                    // Use Newtonsoft.Json for parsing the JSON response
-                    var giphyResponse = JsonConvert.DeserializeObject<GiphyResponse>(jsonResponse);
-
-                    // Check if the image URL is available in the response
-                    if (giphyResponse?.Data?.Image_Url != null)
-                    {
-                        return giphyResponse.Data.Image_Url;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error: Image URL not found in the Giphy API response.");
-                        return null;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
-                    return null;
-                }
-            }
-        }
-
-        static async Task<bool> SendDiscordMessage(string Message, ISocketMessageChannel targetChannel, bool CleanHtml = true, string RandomGIFInfluence = null, bool sendGIF = true)
-        {
-            try
-            {
-                if (CleanHtml)
-                {
-                    Message = CleanHTML(Message, false);
-                }
-                SocketTextChannel TargetChannel = (SocketTextChannel)targetChannel;
-                Console.WriteLine($"Attempting to write to channel {TargetChannel.Id}...");
-
-                string BufferGIF = await GetRandomGifUrl();
-                if (RandomGIFInfluence != null)
-                {
-                    BufferGIF = await GetRandomGifUrl(RandomGIFInfluence);
-                }
-
-                Console.WriteLine($"Random GIF URL: {BufferGIF}");
-
-                // Send Message to channel
-                await TargetChannel.SendMessageAsync($"**Smelly Feet here with a PSA!**\n\n{Message}\n\nThanks for following (**{TargetChannel.Name}**) updates!");
-                if (sendGIF)
-                {
-                    await TargetChannel.SendMessageAsync(BufferGIF);
-                }
-
-
-                // Return success
-                return true;
-            }
-            catch
-            {
-
-                // Return failure
-                return false;
-            }
-
-        }
-
-        static string CleanHTML(string Input, bool ClearTopLine = true)
-        {
-            Input = Replace(Input, "i");
-            Input = Replace(Input, "b");
-            Input = Replace(Input, "p");
-            Input = Replace(Input, "em");
-            Input = Replace(Input, "a");
-            if (ClearTopLine)
-            {
-                int IndexOf = Input.IndexOf("\n");
-                if (IndexOf != -1)
-                {
-                    Input = Input.Substring(IndexOf + 1);
-                }
-            }
-            return Input;
-        }
-
-        static string Replace(string FullText, string TextToReplace)
-        {
-            switch (TextToReplace)
-            {
-                case "em": // Clean and format <em> tags
-                    FullText = FullText.Replace($"<{TextToReplace}>", "**");
-                    FullText = FullText.Replace($"</{TextToReplace}>", "**");
-                    break;
-                case "a": // Clean and format <a href""> links
-                    FullText = FullText.Replace($"\">", ")[");
-                    FullText = FullText.Replace($"</a>", "]");
-                    FullText = FullText.Replace($"<a href=\"", "(");
-                    string LinkPattern = @"\(([^)]*)\)\[([^)]*)\]";
-                    FullText.Replace("\t", " ");
-                    Match LinkMatch = Regex.Match(FullText, LinkPattern);
-                    while (LinkMatch.Success)
-                    {
-                        // Full-text format is: [link-url](link-text)
-                        FullText = FullText.Replace($"{LinkMatch.Groups[0].Value}", $"[{LinkMatch.Groups[2].Value}]({LinkMatch.Groups[1].Value})");
-                        LinkMatch = Regex.Match(FullText, LinkPattern);
-                    }
-                    break;
-                default: // Clean any <> </> tags 
-                    FullText = FullText.Replace($"<{TextToReplace}>", "");
-                    FullText = FullText.Replace($"</{TextToReplace}>", "");
-                    break;
-            }
-
-            return FullText;
-        }
-
-        /******************************************************************** END UTILITY FUNCTIONS **************************************************************************/
+        
+        /********************************************************************** END MAIN PROGRAM LOOP ****************************************************************************/
     }
 
 }

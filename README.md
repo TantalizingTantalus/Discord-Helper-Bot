@@ -17,12 +17,13 @@ Discord helper bot is written in C# .NET 8.0 Framework and uses a variety of API
 - **/advice** - returns some advice.\
 - **/bbc** - returns recent BBC news articles.\
 - **/insultme** - hurls an insult your way!\
-- **/weather** - displays the local weather.\
+- **/weather 'city,state'** - displays the weather for the selected city, optional input state.\
+- **/taj** - Tells a Joke! Helper bots can be funny too!\
 - **/commands** - lists all the available commands.
 
 # Automatically have the bot run on startup on your pc
  So far I dont have a valid solution for this so the current workaround is to:
- - Create a shortcut to the SmellyFeetRevived.exe in the release folder
+ - Create a shortcut to the DiscordHelperBot.exe in the release folder
  - Add the newly create shortcut to your startup folder
 
 To disable the bot from running, simply search task manager for the name of the bot "DiscordHelperBot" and end the task. 

@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|solutionrelative:logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\discord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|solutionrelative:discord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,6 +13,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
       "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\jsonblobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|solutionrelative:jsonblobs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD7B0232-A2B9-4AFD-B7BE-C959A4563CD5}|DiscordHelperBot.csproj|solutionrelative:logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,55 +30,68 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "JsonBlobs.cs",
+              "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\JsonBlobs.cs",
+              "RelativeDocumentMoniker": "JsonBlobs.cs",
+              "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\JsonBlobs.cs",
+              "RelativeToolTip": "JsonBlobs.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACIAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-06T21:19:11.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\README.md",
               "RelativeDocumentMoniker": "README.md",
               "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\README.md",
               "RelativeToolTip": "README.md",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAvAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABEAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2024-04-06T19:08:21.721Z"
+              "WhenOpened": "2024-04-06T19:08:21.721Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAIkCAAAAAAAAAAAAALUAAAAAAAAA",
+              "ViewState": "AQIAAGsAAAAAAAAAAAAqwFICAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-06T19:06:25.288Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "Logger.cs",
               "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\Logger.cs",
               "RelativeDocumentMoniker": "Logger.cs",
               "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\Logger.cs",
               "RelativeToolTip": "Logger.cs",
-              "ViewState": "AQIAADIAAAAAAAAAAAAIwCAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-06T19:06:24.616Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-06T19:06:24.616Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Discord.cs",
               "DocumentMoniker": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\Discord.cs",
               "RelativeDocumentMoniker": "Discord.cs",
               "ToolTip": "C:\\Users\\Gaevi\\OneDrive\\Documents\\CodePractice\\SmellyFeetRevived\\Discord-Helper-Bot\\Discord.cs",
               "RelativeToolTip": "Discord.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAQwEAAAABVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-06T19:06:23.525Z",
               "EditorCaption": ""
